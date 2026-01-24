@@ -3,16 +3,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, Mail, Phone, Linkedin, Globe, MapPin, Building2,
   Clock, CheckCircle2, AlertCircle, TrendingUp, Users,
-  ExternalLink, Copy, Check, MessageSquare
+  ExternalLink, Copy, Check, MessageSquare, Send
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ScoreBadge from './ScoreBadge';
+import EmailDrafter from './EmailDrafter';
 
 export default function LeadDetailsModal({ lead, isOpen, onClose, onSave }) {
   const [notes, setNotes] = useState(lead?.notes || '');
   const [copied, setCopied] = useState(null);
+  const [activeTab, setActiveTab] = useState('details');
 
   if (!isOpen || !lead) return null;
 
@@ -78,8 +81,38 @@ export default function LeadDetailsModal({ lead, isOpen, onClose, onSave }) {
             </div>
           </div>
 
+          {/* Tabs */}
+          <div className="border-b border-gray-100 px-6">
+            <Tabs value={activeTab} onValueChange={setActiveTab}>
+              <TabsList className="bg-transparent border-0 h-auto p-0 gap-4">
+                <TabsTrigger 
+                  value="details"
+                  className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none px-0 py-3"
+                >
+                  Lead Details
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="email"
+                  className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none px-0 py-3 flex items-center gap-2"
+                >
+                  <Send className="w-4 h-4" />
+                  Email Outreach
+                  {lead.email_status !== 'not_sent' && (
+                    <Badge className="bg-green-100 text-green-700 ml-1">
+                      {lead.email_status === 'sent' && 'Sent'}
+                      {lead.email_status === 'opened' && 'Opened'}
+                      {lead.email_status === 'replied' && 'Replied'}
+                    </Badge>
+                  )}
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+
           {/* Content */}
-          <div className="p-6 overflow-y-auto max-h-[60vh] space-y-6">
+          <div className="p-6 overflow-y-auto max-h-[60vh]">
+            <Tabs value={activeTab}>
+              <TabsContent value="details" className="space-y-6 m-0">
             {/* Pain Point */}
             <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/50 rounded-2xl p-5">
               <div className="flex items-start gap-3">
@@ -226,19 +259,32 @@ export default function LeadDetailsModal({ lead, isOpen, onClose, onSave }) {
               </div>
             )}
 
-            {/* Notes */}
-            <div>
-              <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                <MessageSquare className="w-5 h-5 text-gray-400" />
-                Notes
-              </h3>
-              <Textarea
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                placeholder="Add notes about this lead..."
-                className="min-h-[100px] resize-none"
-              />
-            </div>
+              {/* Notes */}
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                  <MessageSquare className="w-5 h-5 text-gray-400" />
+                  Notes
+                </h3>
+                <Textarea
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Add notes about this lead..."
+                  className="min-h-[100px] resize-none"
+                />
+              </div>
+              </TabsContent>
+
+              <TabsContent value="email" className="m-0">
+                <EmailDrafter 
+                  lead={lead} 
+                  onSave={onSave}
+                  onEmailSent={(updatedLead) => {
+                    onSave(updatedLead);
+                    setActiveTab('details');
+                  }}
+                />
+              </TabsContent>
+            </Tabs>
           </div>
 
           {/* Footer */}

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { 
   Search, Target, TrendingUp, Users, Clock, Filter,
   CheckCircle2, Mail, Phone, MoreVertical, Trash2,
-  MessageSquare, ExternalLink, Building2
+  MessageSquare, ExternalLink, Building2, Send
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -67,6 +67,7 @@ export default function Dashboard() {
     total: leads.length,
     contacted: leads.filter(l => l.contacted).length,
     qualified: leads.filter(l => l.status === 'qualified').length,
+    emailsSent: leads.filter(l => l.email_status && l.email_status !== 'not_sent').length,
     avgScore: leads.length > 0 
       ? Math.round(leads.reduce((sum, l) => sum + (l.lead_score || 0), 0) / leads.length)
       : 0
@@ -123,7 +124,7 @@ export default function Dashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4"
+          className="grid grid-cols-2 md:grid-cols-5 gap-4"
         >
           <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
             <div className="flex items-center gap-3 mb-2">
@@ -259,6 +260,7 @@ export default function Dashboard() {
                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Contact</th>
                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Score</th>
                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Email</th>
                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Pain Point</th>
                     <th className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
                   </tr>
@@ -293,6 +295,23 @@ export default function Dashboard() {
                       </td>
                       <td className="px-6 py-4">
                         {getStatusBadge(lead.status)}
+                      </td>
+                      <td className="px-6 py-4">
+                        {lead.email_status && lead.email_status !== 'not_sent' ? (
+                          <div className="flex items-center gap-2">
+                            <Send className="w-4 h-4 text-indigo-500" />
+                            <Badge className={
+                              lead.email_status === 'replied' ? 'bg-purple-100 text-purple-700' :
+                              lead.email_status === 'opened' ? 'bg-green-100 text-green-700' :
+                              'bg-blue-100 text-blue-700'
+                            }>
+                              {lead.email_status === 'replied' ? 'Replied' :
+                               lead.email_status === 'opened' ? 'Opened' : 'Sent'}
+                            </Badge>
+                          </div>
+                        ) : (
+                          <span className="text-sm text-gray-400">Not sent</span>
+                        )}
                       </td>
                       <td className="px-6 py-4">
                         <p className="text-sm text-gray-600 max-w-xs truncate">{lead.timer_pain_point}</p>
@@ -334,9 +353,25 @@ export default function Dashboard() {
                                 <TrendingUp className="w-4 h-4 mr-2" />
                                 Mark Converted
                               </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => {
+                                  updateLeadMutation.mutate({
+                                    id: lead.id,
+                                    data: { 
+                                      email_status: lead.email_status === 'sent' ? 'opened' : 
+                                                   lead.email_status === 'opened' ? 'replied' : lead.email_status,
+                                      [`email_${lead.email_status === 'sent' ? 'opened' : 'replied'}_date`]: new Date().toISOString()
+                                    }
+                                  });
+                                }}
+                                disabled={!lead.email_status || lead.email_status === 'not_sent' || lead.email_status === 'replied'}
+                              >
+                                <Mail className="w-4 h-4 mr-2" />
+                                {lead.email_status === 'sent' ? 'Mark Opened' : 'Mark Replied'}
+                              </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => setSelectedLead(lead)}>
                                 <MessageSquare className="w-4 h-4 mr-2" />
-                                Add Notes
+                                View Details
                               </DropdownMenuItem>
                               <DropdownMenuItem 
                                 onClick={() => deleteLeadMutation.mutate(lead.id)}

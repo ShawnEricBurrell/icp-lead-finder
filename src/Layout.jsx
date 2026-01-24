@@ -7,6 +7,7 @@ export default function Layout({ children, currentPageName }) {
   const navItems = [
     { name: 'Home', icon: Search, page: 'Home' },
     { name: 'Dashboard', icon: LayoutDashboard, page: 'Dashboard' },
+    { name: 'Templates', icon: Sparkles, page: 'EmailTemplates' },
     { name: 'CRM Settings', icon: Settings, page: 'CRMSettings' },
   ];
 

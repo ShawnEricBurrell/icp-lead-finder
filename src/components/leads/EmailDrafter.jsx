@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import EmailComposer from '../email/EmailComposer';
 import { motion } from 'framer-motion';
 import { Mail, Sparkles, Send, Copy, Check, RefreshCw, Loader2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";

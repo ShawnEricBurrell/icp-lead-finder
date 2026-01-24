@@ -21,7 +21,7 @@ export default function Home() {
     
     try {
       // Use InvokeLLM to generate mock leads with scoring
-      const result = await base44.integrations.Core.InvokeLLM({
+      const response = await base44.integrations.Core.InvokeLLM({
         prompt: `Generate 5-8 realistic business leads for companies in ${searchData.city} in the ${searchData.industry} industry that would be ideal customers for rapid website development services.
 
 For each lead, provide:
@@ -78,6 +78,8 @@ Make the leads realistic and varied. Higher scores should have more urgent pain 
           }
         }
       });
+
+      const result = response.data || response;
 
       // Save search to database
       await base44.entities.Search.create({

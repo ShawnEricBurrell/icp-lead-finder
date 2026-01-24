@@ -25,12 +25,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import LeadDetailsModal from '@/components/leads/LeadDetailsModal';
 import ScoreBadge from '@/components/leads/ScoreBadge';
+import EmailPerformanceReport from '@/components/analytics/EmailPerformanceReport';
 
 export default function Dashboard() {
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedLead, setSelectedLead] = useState(null);
+  const [showAnalytics, setShowAnalytics] = useState(false);
 
   const { data: leads = [], isLoading } = useQuery({
     queryKey: ['leads'],
@@ -117,8 +119,29 @@ export default function Dashboard() {
             <h1 className="text-3xl font-bold text-gray-900">Lead Dashboard</h1>
             <p className="text-gray-500">Manage and track your saved leads</p>
           </div>
+          <Button
+            variant={showAnalytics ? "default" : "outline"}
+            onClick={() => setShowAnalytics(!showAnalytics)}
+            className={showAnalytics ? "bg-blue-600 hover:bg-blue-700" : ""}
+          >
+            <TrendingUp className="w-4 h-4 mr-2" />
+            {showAnalytics ? 'View Leads' : 'Email Analytics'}
+          </Button>
         </motion.div>
 
+        {/* Email Analytics View */}
+        {showAnalytics && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <EmailPerformanceReport />
+          </motion.div>
+        )}
+
+        {/* Leads View */}
+        {!showAnalytics && (
+          <>
         {/* Stats Cards */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -401,6 +424,8 @@ export default function Dashboard() {
             </div>
           )}
         </motion.div>
+          </>
+        )}
       </div>
 
       {/* Lead Details Modal */}

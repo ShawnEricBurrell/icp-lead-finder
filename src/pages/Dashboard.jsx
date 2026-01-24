@@ -329,7 +329,14 @@ export default function Dashboard() {
                         <ScoreBadge score={lead.lead_score} />
                       </td>
                       <td className="px-6 py-4">
-                        {getStatusBadge(lead.status)}
+                        <div className="flex items-center gap-2">
+                          {getStatusBadge(lead.status)}
+                          {lead.cadence_active && (
+                            <Badge className="bg-indigo-100 text-indigo-700 text-xs">
+                              Cadence Active
+                            </Badge>
+                          )}
+                        </div>
                       </td>
                       <td className="px-6 py-4">
                         {lead.email_status && lead.email_status !== 'not_sent' ? (

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { base44 } from '@/api/base44Client';
+import CadenceControls from './CadenceControls';
 
 export default function FollowUpSequence({ lead, initialEmail, onSave }) {
   const [loading, setLoading] = useState(false);
@@ -242,6 +243,9 @@ Return ONLY a JSON array with 3 follow-up emails.`,
               Save Follow-Up Sequence
             </Button>
           </div>
+
+          {/* Cadence Controls */}
+          <CadenceControls lead={lead} onUpdate={onSave} />
 
           {/* Timeline Visualization */}
           <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-6 border border-purple-200">

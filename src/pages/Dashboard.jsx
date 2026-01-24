@@ -99,6 +99,7 @@ export default function Dashboard() {
       new: { class: 'bg-blue-100 text-blue-700', label: 'New' },
       contacted: { class: 'bg-yellow-100 text-yellow-700', label: 'Contacted' },
       qualified: { class: 'bg-green-100 text-green-700', label: 'Qualified' },
+      unqualified: { class: 'bg-red-100 text-red-700', label: 'Unqualified' },
       converted: { class: 'bg-purple-100 text-purple-700', label: 'Converted' },
       archived: { class: 'bg-gray-100 text-gray-600', label: 'Archived' }
     };
@@ -257,6 +258,7 @@ export default function Dashboard() {
                 <SelectItem value="new">New</SelectItem>
                 <SelectItem value="contacted">Contacted</SelectItem>
                 <SelectItem value="qualified">Qualified</SelectItem>
+                <SelectItem value="unqualified">Unqualified</SelectItem>
                 <SelectItem value="converted">Converted</SelectItem>
                 <SelectItem value="archived">Archived</SelectItem>
               </SelectContent>
@@ -381,6 +383,10 @@ export default function Dashboard() {
                               <DropdownMenuItem onClick={() => handleStatusChange(lead, 'qualified')}>
                                 <Target className="w-4 h-4 mr-2" />
                                 Mark Qualified
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => handleStatusChange(lead, 'unqualified')}>
+                                <ExternalLink className="w-4 h-4 mr-2" />
+                                Mark Unqualified
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => handleStatusChange(lead, 'converted')}>
                                 <TrendingUp className="w-4 h-4 mr-2" />

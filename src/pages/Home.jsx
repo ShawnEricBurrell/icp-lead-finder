@@ -6,7 +6,6 @@ import SearchForm from '@/components/leads/SearchForm';
 import ResultsSection from '@/components/leads/ResultsSection';
 import LoadingIndicator from '@/components/leads/LoadingIndicator';
 import LeadDetailsModal from '@/components/leads/LeadDetailsModal';
-import { toast } from 'sonner';
 
 export default function Home() {
   const [leads, setLeads] = useState([]);
@@ -90,12 +89,9 @@ Make the leads realistic and varied. Higher scores should have more urgent pain 
       // Sort by score and set leads
       const sortedLeads = (result.leads || []).sort((a, b) => b.lead_score - a.lead_score);
       setLeads(sortedLeads);
-      
-      toast.success(`Found ${sortedLeads.length} high-potential leads!`);
     } catch (err) {
       console.error('Search error:', err);
       setError(err.message || 'Failed to search for leads');
-      toast.error('Failed to search for leads');
     } finally {
       setLoading(false);
     }
@@ -119,7 +115,7 @@ Make the leads realistic and varied. Higher scores should have more urgent pain 
       ));
       setSelectedLead(updatedLead);
     } catch (err) {
-      toast.error('Failed to save lead');
+      console.error('Failed to save lead:', err);
     }
   };
 

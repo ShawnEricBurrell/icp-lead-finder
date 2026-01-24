@@ -8,7 +8,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner";
 import ScoreBadge from './ScoreBadge';
 
 export default function LeadDetailsModal({ lead, isOpen, onClose, onSave }) {
@@ -20,13 +19,11 @@ export default function LeadDetailsModal({ lead, isOpen, onClose, onSave }) {
   const copyToClipboard = async (text, field) => {
     await navigator.clipboard.writeText(text);
     setCopied(field);
-    toast.success('Copied to clipboard');
     setTimeout(() => setCopied(null), 2000);
   };
 
   const handleSaveNotes = () => {
     onSave({ ...lead, notes });
-    toast.success('Notes saved');
   };
 
   const scoreBreakdown = lead.score_breakdown || {

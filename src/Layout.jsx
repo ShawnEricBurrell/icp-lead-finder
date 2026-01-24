@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
 import { Search, LayoutDashboard, Sparkles } from 'lucide-react';
-import { Toaster } from "@/components/ui/sonner";
 
 export default function Layout({ children, currentPageName }) {
   const navItems = [
@@ -49,8 +48,6 @@ export default function Layout({ children, currentPageName }) {
       <main>
         {children}
       </main>
-
-      <Toaster position="top-right" />
     </div>
   );
 }

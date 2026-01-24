@@ -23,7 +23,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { toast } from 'sonner';
 import LeadDetailsModal from '@/components/leads/LeadDetailsModal';
 import ScoreBadge from '@/components/leads/ScoreBadge';
 
@@ -47,7 +46,6 @@ export default function Dashboard() {
     mutationFn: ({ id, data }) => base44.entities.Lead.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['leads'] });
-      toast.success('Lead updated');
     }
   });
 
@@ -55,7 +53,6 @@ export default function Dashboard() {
     mutationFn: (id) => base44.entities.Lead.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['leads'] });
-      toast.success('Lead deleted');
     }
   });
 

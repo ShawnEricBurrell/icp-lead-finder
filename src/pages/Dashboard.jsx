@@ -26,6 +26,7 @@ import {
 import LeadDetailsModal from '@/components/leads/LeadDetailsModal';
 import ScoreBadge from '@/components/leads/ScoreBadge';
 import EmailPerformanceReport from '@/components/analytics/EmailPerformanceReport';
+import LeadInsights from '@/components/analytics/LeadInsights';
 
 export default function Dashboard() {
   const queryClient = useQueryClient();
@@ -33,6 +34,7 @@ export default function Dashboard() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedLead, setSelectedLead] = useState(null);
   const [showAnalytics, setShowAnalytics] = useState(false);
+  const [analyticsView, setAnalyticsView] = useState('performance'); // 'performance' or 'insights'
 
   const { data: leads = [], isLoading } = useQuery({
     queryKey: ['leads'],
@@ -132,12 +134,39 @@ export default function Dashboard() {
 
         {/* Email Analytics View */}
         {showAnalytics && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <EmailPerformanceReport />
-          </motion.div>
+          <>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex gap-2 bg-white rounded-2xl p-2 border border-gray-100 w-fit"
+            >
+              <Button
+                variant={analyticsView === 'performance' ? 'default' : 'ghost'}
+                onClick={() => setAnalyticsView('performance')}
+                className={analyticsView === 'performance' ? 'bg-blue-600' : ''}
+              >
+                Email Performance
+              </Button>
+              <Button
+                variant={analyticsView === 'insights' ? 'default' : 'ghost'}
+                onClick={() => setAnalyticsView('insights')}
+                className={analyticsView === 'insights' ? 'bg-purple-600' : ''}
+              >
+                AI Insights
+              </Button>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              {analyticsView === 'performance' ? (
+                <EmailPerformanceReport />
+              ) : (
+                <LeadInsights />
+              )}
+            </motion.div>
+          </>
         )}
 
         {/* Leads View */}

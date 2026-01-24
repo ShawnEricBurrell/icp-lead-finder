@@ -4,14 +4,16 @@ import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
 import {
   Settings, RefreshCw, Plus, Trash2, CheckCircle2,
-  AlertCircle, ArrowRightLeft, Download, Upload
+  AlertCircle, ArrowRightLeft, Download, Upload, History, Clock
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from 'sonner';
+import SyncHistoryTimeline from '@/components/crm/SyncHistoryTimeline';
 
 export default function CRMSettings() {
   const queryClient = useQueryClient();
@@ -25,6 +27,11 @@ export default function CRMSettings() {
   const { data: connections = [] } = useQuery({
     queryKey: ['crm-connections'],
     queryFn: () => base44.entities.CRMConnection.list()
+  });
+
+  const { data: syncHistory = [] } = useQuery({
+    queryKey: ['crm-sync-history'],
+    queryFn: () => base44.entities.CRMSyncHistory.list('-created_date', 20)
   });
 
   const createConnectionMutation = useMutation({
@@ -57,6 +64,7 @@ export default function CRMSettings() {
       const result = await base44.functions.invoke('syncToHubSpot', {});
       toast.success(`Synced ${result.data.synced} leads to HubSpot`);
       queryClient.invalidateQueries({ queryKey: ['crm-connections'] });
+      queryClient.invalidateQueries({ queryKey: ['crm-sync-history'] });
     } catch (err) {
       toast.error('Sync failed: ' + err.message);
     } finally {
@@ -70,6 +78,7 @@ export default function CRMSettings() {
       const result = await base44.functions.invoke('syncFromHubSpot', {});
       toast.success(`Imported ${result.data.created} new leads, updated ${result.data.updated}`);
       queryClient.invalidateQueries({ queryKey: ['crm-connections'] });
+      queryClient.invalidateQueries({ queryKey: ['crm-sync-history'] });
     } catch (err) {
       toast.error('Sync failed: ' + err.message);
     } finally {
@@ -173,6 +182,17 @@ export default function CRMSettings() {
               </div>
             ) : (
               <>
+                <Tabs defaultValue="overview" className="w-full">
+                  <TabsList className="grid w-full grid-cols-3 mb-6">
+                    <TabsTrigger value="overview">Overview</TabsTrigger>
+                    <TabsTrigger value="mappings">Field Mappings</TabsTrigger>
+                    <TabsTrigger value="history" className="flex items-center gap-2">
+                      <History className="w-4 h-4" />
+                      Sync History
+                    </TabsTrigger>
+                  </TabsList>
+
+                  <TabsContent value="overview" className="space-y-6">
                 {/* Sync Stats */}
                 {hubspotConnection.sync_stats && (
                   <div className="grid grid-cols-3 gap-4">
@@ -233,7 +253,9 @@ export default function CRMSettings() {
                     Pull from HubSpot
                   </Button>
                 </div>
+                  </TabsContent>
 
+                  <TabsContent value="mappings" className="space-y-6">
                 {/* Field Mappings */}
                 <div className="border-t border-gray-200 pt-6">
                   <h4 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
@@ -332,6 +354,23 @@ export default function CRMSettings() {
                     </Button>
                   </div>
                 </div>
+                  </TabsContent>
+
+                  <TabsContent value="history" className="space-y-4">
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <h4 className="font-semibold text-gray-900">Sync History</h4>
+                        <p className="text-sm text-gray-500">Recent synchronization activity</p>
+                      </div>
+                      <Badge variant="outline">
+                        {syncHistory.filter(h => h.connection_id === hubspotConnection.id).length} records
+                      </Badge>
+                    </div>
+                    <SyncHistoryTimeline 
+                      history={syncHistory.filter(h => h.connection_id === hubspotConnection.id)}
+                    />
+                  </TabsContent>
+                </Tabs>
 
                 {/* Delete Connection */}
                 <div className="border-t border-gray-200 pt-4">

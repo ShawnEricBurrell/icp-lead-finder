@@ -1,6 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
 Deno.serve(async (req) => {
+  const startTime = Date.now();
   try {
     const base44 = createClientFromRequest(req);
     
@@ -219,6 +220,20 @@ Deno.serve(async (req) => {
         last_sync_count: results.synced.length,
         errors: (connection.sync_stats?.errors || 0) + results.errors.length
       }
+    });
+    
+    // Create sync history record
+    await base44.asServiceRole.entities.CRMSyncHistory.create({
+      connection_id: connection.id,
+      crm_type: 'hubspot',
+      sync_direction: 'to_crm',
+      status: results.errors.length === 0 ? 'success' : (results.synced.length > 0 ? 'partial' : 'failed'),
+      records_synced: results.synced.length,
+      records_created: 0,
+      records_updated: results.synced.length,
+      records_failed: results.errors.length,
+      duration_ms: Date.now() - startTime,
+      error_details: results.errors.map(e => ({ record: e.company, error: e.error }))
     });
     
     return Response.json({

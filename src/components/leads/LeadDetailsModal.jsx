@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, Mail, Phone, Linkedin, Globe, MapPin, Building2,
   Clock, CheckCircle2, AlertCircle, TrendingUp, Users,
-  ExternalLink, Copy, Check, MessageSquare, Send
+  ExternalLink, Copy, Check, MessageSquare, Send, Calendar
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ScoreBadge from './ScoreBadge';
 import EmailDrafter from './EmailDrafter';
+import FollowUpSequence from './FollowUpSequence';
 
 export default function LeadDetailsModal({ lead, isOpen, onClose, onSave }) {
   const [notes, setNotes] = useState(lead?.notes || '');
@@ -102,6 +103,18 @@ export default function LeadDetailsModal({ lead, isOpen, onClose, onSave }) {
                       {lead.email_status === 'sent' && 'Sent'}
                       {lead.email_status === 'opened' && 'Opened'}
                       {lead.email_status === 'replied' && 'Replied'}
+                    </Badge>
+                  )}
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="followups"
+                  className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none px-0 py-3 flex items-center gap-2"
+                >
+                  <Calendar className="w-4 h-4" />
+                  Follow-Ups
+                  {lead.follow_up_sequence?.length > 0 && (
+                    <Badge className="bg-purple-100 text-purple-700 ml-1">
+                      {lead.follow_up_sequence.length}
                     </Badge>
                   )}
                 </TabsTrigger>
@@ -282,6 +295,14 @@ export default function LeadDetailsModal({ lead, isOpen, onClose, onSave }) {
                     onSave(updatedLead);
                     setActiveTab('details');
                   }}
+                />
+              </TabsContent>
+
+              <TabsContent value="followups" className="m-0">
+                <FollowUpSequence 
+                  lead={lead}
+                  initialEmail={{ subject: lead.email_subject, body: lead.email_draft }}
+                  onSave={onSave}
                 />
               </TabsContent>
             </Tabs>

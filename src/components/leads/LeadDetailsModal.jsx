@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ScoreBadge from './ScoreBadge';
 import EmailDrafter from './EmailDrafter';
 import FollowUpSequence from './FollowUpSequence';
+import ScoreHistory from './ScoreHistory';
 
 export default function LeadDetailsModal({ lead, isOpen, onClose, onSave }) {
   const [notes, setNotes] = useState(lead?.notes || '');
@@ -118,7 +119,19 @@ export default function LeadDetailsModal({ lead, isOpen, onClose, onSave }) {
                     </Badge>
                   )}
                 </TabsTrigger>
-              </TabsList>
+                <TabsTrigger 
+                  value="scoring"
+                  className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent rounded-none px-0 py-3 flex items-center gap-2"
+                >
+                  <TrendingUp className="w-4 h-4" />
+                  Score History
+                  {lead.score_history?.length > 0 && (
+                    <Badge className="bg-blue-100 text-blue-700 ml-1">
+                      {lead.score_history.length}
+                    </Badge>
+                  )}
+                </TabsTrigger>
+                </TabsList>
             </Tabs>
           </div>
 
@@ -305,7 +318,39 @@ export default function LeadDetailsModal({ lead, isOpen, onClose, onSave }) {
                   onSave={onSave}
                 />
               </TabsContent>
-            </Tabs>
+
+              <TabsContent value="scoring" className="m-0">
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-semibold text-gray-800 mb-1">AI-Powered Lead Score Evolution</h3>
+                    <p className="text-sm text-gray-500">
+                      Track how this lead's score changes based on engagement and AI analysis
+                    </p>
+                  </div>
+
+                  {lead.last_score_update && (
+                    <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                      <p className="text-sm text-blue-800">
+                        <span className="font-medium">Last Updated:</span>{' '}
+                        {new Date(lead.last_score_update).toLocaleDateString()} at{' '}
+                        {new Date(lead.last_score_update).toLocaleTimeString([], { 
+                          hour: '2-digit', 
+                          minute: '2-digit' 
+                        })}
+                      </p>
+                      <p className="text-xs text-blue-600 mt-1">
+                        Scores are automatically updated daily based on engagement patterns
+                      </p>
+                    </div>
+                  )}
+
+                  <ScoreHistory 
+                    scoreHistory={lead.score_history} 
+                    currentScore={lead.lead_score}
+                  />
+                </div>
+              </TabsContent>
+              </Tabs>
           </div>
 
           {/* Footer */}

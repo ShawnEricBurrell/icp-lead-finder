@@ -1,15 +1,17 @@
-import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
 import CRMSettings from './pages/CRMSettings';
+import Dashboard from './pages/Dashboard';
 import EmailTemplates from './pages/EmailTemplates';
+import Home from './pages/Home';
+import Analytics from './pages/Analytics';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "Home": Home,
-    "Dashboard": Dashboard,
     "CRMSettings": CRMSettings,
+    "Dashboard": Dashboard,
     "EmailTemplates": EmailTemplates,
+    "Home": Home,
+    "Analytics": Analytics,
 }
 
 export const pagesConfig = {

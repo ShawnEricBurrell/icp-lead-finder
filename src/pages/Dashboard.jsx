@@ -158,6 +158,16 @@ export default function Dashboard() {
 
           <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
             <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 bg-indigo-100 rounded-xl">
+                <Send className="w-5 h-5 text-indigo-600" />
+              </div>
+              <span className="text-gray-500 font-medium">Emails Sent</span>
+            </div>
+            <p className="text-3xl font-bold text-gray-900">{stats.emailsSent}</p>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+            <div className="flex items-center gap-3 mb-2">
               <div className="p-2 bg-amber-100 rounded-xl">
                 <TrendingUp className="w-5 h-5 text-amber-600" />
               </div>

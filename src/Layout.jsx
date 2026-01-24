@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
-import { Search, LayoutDashboard, Sparkles } from 'lucide-react';
+import { Search, LayoutDashboard, Sparkles, Settings } from 'lucide-react';
 
 export default function Layout({ children, currentPageName }) {
   const navItems = [
     { name: 'Home', icon: Search, page: 'Home' },
     { name: 'Dashboard', icon: LayoutDashboard, page: 'Dashboard' },
+    { name: 'CRM Settings', icon: Settings, page: 'CRMSettings' },
   ];
 
   return (

@@ -3,17 +3,162 @@ import { motion } from 'framer-motion';
 import { 
   Search, Database, Zap, Mail, BarChart3, Calendar, 
   Code, Settings, Sparkles, TrendingUp, Users, Globe,
-  FileText, CheckCircle2, ChevronDown, ChevronUp
+  FileText, CheckCircle2, ChevronDown, ChevronUp, Download
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { jsPDF } from 'jspdf';
 
 export default function Features() {
   const [expandedSection, setExpandedSection] = useState(null);
+  const [exporting, setExporting] = useState(false);
 
   const toggleSection = (section) => {
     setExpandedSection(expandedSection === section ? null : section);
+  };
+
+  const exportToPDF = () => {
+    setExporting(true);
+    try {
+      const doc = new jsPDF();
+      let yPosition = 20;
+
+      // Title
+      doc.setFontSize(20);
+      doc.text('ICP Lead Finder - Technical Documentation', 20, yPosition);
+      yPosition += 10;
+
+      doc.setFontSize(12);
+      doc.text('AI-Powered Lead Generation & Sales Automation System', 20, yPosition);
+      yPosition += 15;
+
+      // Frontend Features
+      doc.setFontSize(16);
+      doc.text('Frontend Capabilities', 20, yPosition);
+      yPosition += 10;
+
+      frontendFeatures.forEach(module => {
+        if (yPosition > 270) {
+          doc.addPage();
+          yPosition = 20;
+        }
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text(`• ${module.category}`, 25, yPosition);
+        yPosition += 7;
+        doc.setFont(undefined, 'normal');
+        doc.setFontSize(10);
+        module.features.forEach(feature => {
+          if (yPosition > 270) {
+            doc.addPage();
+            yPosition = 20;
+          }
+          doc.text(`  - ${feature}`, 30, yPosition);
+          yPosition += 6;
+        });
+        yPosition += 5;
+      });
+
+      // Backend Functions
+      doc.addPage();
+      yPosition = 20;
+      doc.setFontSize(16);
+      doc.text('Backend Functions & APIs', 20, yPosition);
+      yPosition += 10;
+
+      backendCapabilities.forEach(func => {
+        if (yPosition > 260) {
+          doc.addPage();
+          yPosition = 20;
+        }
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text(`• ${func.name}`, 25, yPosition);
+        yPosition += 7;
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'normal');
+        doc.text(`  Function: ${func.function}`, 30, yPosition);
+        yPosition += 6;
+        doc.text(`  ${func.description}`, 30, yPosition);
+        yPosition += 8;
+      });
+
+      // Data Entities
+      doc.addPage();
+      yPosition = 20;
+      doc.setFontSize(16);
+      doc.text('Data Entities & Schema', 20, yPosition);
+      yPosition += 10;
+
+      dataEntities.forEach(entity => {
+        if (yPosition > 260) {
+          doc.addPage();
+          yPosition = 20;
+        }
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text(`• ${entity.name}`, 25, yPosition);
+        yPosition += 7;
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'normal');
+        doc.text(`  ${entity.description}`, 30, yPosition);
+        yPosition += 8;
+      });
+
+      // Automations
+      doc.addPage();
+      yPosition = 20;
+      doc.setFontSize(16);
+      doc.text('Scheduled Automations', 20, yPosition);
+      yPosition += 10;
+
+      automations.forEach(automation => {
+        if (yPosition > 270) {
+          doc.addPage();
+          yPosition = 20;
+        }
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text(`• ${automation.name}`, 25, yPosition);
+        yPosition += 7;
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'normal');
+        doc.text(`  ${automation.description}`, 30, yPosition);
+        yPosition += 6;
+        doc.text(`  Schedule: ${automation.schedule}`, 30, yPosition);
+        yPosition += 10;
+      });
+
+      // Tech Stack
+      doc.addPage();
+      yPosition = 20;
+      doc.setFontSize(16);
+      doc.text('Technology Stack', 20, yPosition);
+      yPosition += 10;
+
+      techStack.forEach(stack => {
+        if (yPosition > 270) {
+          doc.addPage();
+          yPosition = 20;
+        }
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text(`${stack.category}:`, 25, yPosition);
+        yPosition += 7;
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'normal');
+        doc.text(`  ${stack.items.join(', ')}`, 30, yPosition);
+        yPosition += 10;
+      });
+
+      doc.save('ICP-Lead-Finder-Technical-Documentation.pdf');
+    } catch (error) {
+      console.error('PDF export failed:', error);
+    } finally {
+      setExporting(false);
+    }
   };
 
   const frontendFeatures = [
@@ -310,10 +455,18 @@ export default function Features() {
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Technical Features & Capabilities
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
             Comprehensive documentation of the ICP Lead Finder platform - 
             AI-powered lead generation and sales automation system
           </p>
+          <Button 
+            onClick={exportToPDF}
+            disabled={exporting}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            <Download className="w-4 h-4 mr-2" />
+            {exporting ? 'Generating PDF...' : 'Export to PDF'}
+          </Button>
         </div>
 
         <Tabs defaultValue="frontend" className="space-y-8">

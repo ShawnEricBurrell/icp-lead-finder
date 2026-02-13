@@ -312,8 +312,14 @@ export default function Dashboard() {
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Target className="w-8 h-8 text-gray-400" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">No leads found</h3>
-              <p className="text-gray-500">Search for leads on the home page to get started</p>
+              <h3 className="text-lg font-semibold text-gray-700 mb-2">No leads yet</h3>
+              <p className="text-gray-500 mb-4">Click 'Generate Leads' to start finding your ideal customers</p>
+              <a href="/">
+                <Button className="bg-blue-600 hover:bg-blue-700">
+                  <Search className="w-4 h-4 mr-2" />
+                  Generate Leads
+                </Button>
+              </a>
             </div>
           ) : (
             <div className="overflow-x-auto">

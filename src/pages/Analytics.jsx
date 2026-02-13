@@ -39,6 +39,8 @@ export default function Analytics() {
     queryFn: () => base44.entities.ScheduledEmail.list()
   });
 
+  const hasAnyData = syncHistory.length > 0 || leads.length > 0 || templates.length > 0;
+
   // Filter data by date range
   const filteredSyncHistory = syncHistory.filter(sync => {
     const syncDate = new Date(sync.created_date);
@@ -79,7 +81,21 @@ export default function Analytics() {
           <p className="text-gray-600">Track CRM sync performance and email outreach metrics</p>
         </div>
 
+        {/* Empty State */}
+        {!hasAnyData && (
+          <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <BarChart3 className="w-8 h-8 text-gray-400" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-700 mb-2">Analytics will appear here</h3>
+            <p className="text-gray-500">
+              Analytics data will show once you have leads and email activity
+            </p>
+          </div>
+        )}
+
         {/* Filters */}
+        {hasAnyData && (
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
           <div className="grid md:grid-cols-3 gap-4">
             <div>
@@ -174,6 +190,7 @@ export default function Analytics() {
             />
           </TabsContent>
         </Tabs>
+        )}
       </div>
     </div>
   );

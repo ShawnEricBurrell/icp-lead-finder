@@ -113,9 +113,22 @@ export default function EmailTemplates() {
         {isLoading ? (
           <div className="text-center py-12 text-gray-500">Loading templates...</div>
         ) : templates.length === 0 ? (
-          <div className="text-center py-12">
-            <Mail className="w-16 h-16 mx-auto text-gray-300 mb-4" />
-            <p className="text-gray-500">No templates yet. Create your first one!</p>
+          <div className="text-center py-12 bg-white rounded-xl border border-gray-200 p-12">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Mail className="w-8 h-8 text-gray-400" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-700 mb-2">No email templates yet</h3>
+            <p className="text-gray-500 mb-4">Create your first template to start outreach</p>
+            <Button
+              onClick={() => {
+                resetForm();
+                setShowDialog(true);
+              }}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Create Template
+            </Button>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 gap-6">

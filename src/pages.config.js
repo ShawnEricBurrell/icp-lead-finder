@@ -53,6 +53,7 @@ import Dashboard from './pages/Dashboard';
 import EmailTemplates from './pages/EmailTemplates';
 import Home from './pages/Home';
 import Features from './pages/Features';
+import Landing from './pages/Landing';
 import __Layout from './Layout.jsx';
 
 
@@ -63,6 +64,7 @@ export const PAGES = {
     "EmailTemplates": EmailTemplates,
     "Home": Home,
     "Features": Features,
+    "Landing": Landing,
 }
 
 export const pagesConfig = {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { 
@@ -8,6 +8,40 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+
+const FeatureCard = memo(({ icon: Icon, title, description, color }) => (
+  <Card className="border-2 hover:border-gray-300 transition-colors">
+    <CardContent className="pt-6">
+      <div className={`w-12 h-12 bg-${color}-100 rounded-xl flex items-center justify-center mb-4`}>
+        <Icon className={`w-6 h-6 text-${color}-600`} />
+      </div>
+      <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
+      <p className="text-gray-600 leading-relaxed">{description}</p>
+    </CardContent>
+  </Card>
+));
+
+const TechCard = memo(({ icon: Icon, title, items, color }) => (
+  <Card>
+    <CardContent className="pt-6 text-center">
+      <Icon className={`w-8 h-8 text-${color}-600 mx-auto mb-3`} />
+      <h4 className="font-semibold text-gray-900 mb-2">{title}</h4>
+      <div className="space-y-1 text-sm text-gray-600">
+        {items.map((item, i) => <div key={i}>{item}</div>)}
+      </div>
+    </CardContent>
+  </Card>
+));
+
+const IncludedItem = memo(({ title, description }) => (
+  <div className="flex items-start gap-3">
+    <CheckCircle2 className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+    <div>
+      <div className="font-semibold text-gray-900">{title}</div>
+      <div className="text-sm text-gray-600">{description}</div>
+    </div>
+  </div>
+));
 
 export default function Landing() {
   return (
@@ -94,44 +128,24 @@ export default function Landing() {
           </p>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-2 hover:border-blue-200 transition-colors">
-              <CardContent className="pt-6">
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
-                  <Search className="w-6 h-6 text-blue-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">AI Lead Generation</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Automatically find and score leads by industry and location. AI analyzes company data, 
-                  identifies pain points, and prioritizes opportunities with 0-100 scoring system.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-2 hover:border-purple-200 transition-colors">
-              <CardContent className="pt-6">
-                <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
-                  <Mail className="w-6 h-6 text-purple-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Email Automation</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  AI-generated personalized emails with template library, follow-up sequences, 
-                  optimal send times, and performance tracking (opens, replies, conversions).
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-2 hover:border-green-200 transition-colors">
-              <CardContent className="pt-6">
-                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
-                  <RefreshCw className="w-6 h-6 text-green-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">CRM Integration</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  Bidirectional sync with HubSpot, Salesforce, and Zoho. Custom field mapping, 
-                  automated updates, sync history tracking, and error handling.
-                </p>
-              </CardContent>
-            </Card>
+            <FeatureCard
+              icon={Search}
+              title="AI Lead Generation"
+              description="Automatically find and score leads by industry and location. AI analyzes company data, identifies pain points, and prioritizes opportunities with 0-100 scoring system."
+              color="blue"
+            />
+            <FeatureCard
+              icon={Mail}
+              title="Email Automation"
+              description="AI-generated personalized emails with template library, follow-up sequences, optimal send times, and performance tracking (opens, replies, conversions)."
+              color="purple"
+            />
+            <FeatureCard
+              icon={RefreshCw}
+              title="CRM Integration"
+              description="Bidirectional sync with HubSpot, Salesforce, and Zoho. Custom field mapping, automated updates, sync history tracking, and error handling."
+              color="green"
+            />
           </div>
         </div>
       </section>
@@ -147,53 +161,10 @@ export default function Landing() {
           </div>
 
           <div className="grid md:grid-cols-4 gap-6">
-            <Card>
-              <CardContent className="pt-6 text-center">
-                <Code className="w-8 h-8 text-blue-600 mx-auto mb-3" />
-                <h4 className="font-semibold text-gray-900 mb-2">Frontend</h4>
-                <div className="space-y-1 text-sm text-gray-600">
-                  <div>React 18</div>
-                  <div>Tailwind CSS</div>
-                  <div>Shadcn UI</div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="pt-6 text-center">
-                <Zap className="w-8 h-8 text-purple-600 mx-auto mb-3" />
-                <h4 className="font-semibold text-gray-900 mb-2">Backend</h4>
-                <div className="space-y-1 text-sm text-gray-600">
-                  <div>Base44 Platform</div>
-                  <div>Deno Runtime</div>
-                  <div>Serverless</div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="pt-6 text-center">
-                <Sparkles className="w-8 h-8 text-amber-600 mx-auto mb-3" />
-                <h4 className="font-semibold text-gray-900 mb-2">AI & APIs</h4>
-                <div className="space-y-1 text-sm text-gray-600">
-                  <div>OpenAI API</div>
-                  <div>HubSpot API</div>
-                  <div>Web Search</div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="pt-6 text-center">
-                <BarChart3 className="w-8 h-8 text-green-600 mx-auto mb-3" />
-                <h4 className="font-semibold text-gray-900 mb-2">Analytics</h4>
-                <div className="space-y-1 text-sm text-gray-600">
-                  <div>Recharts</div>
-                  <div>Real-time Data</div>
-                  <div>React Query</div>
-                </div>
-              </CardContent>
-            </Card>
+            <TechCard icon={Code} title="Frontend" items={["React 18", "Tailwind CSS", "Shadcn UI"]} color="blue" />
+            <TechCard icon={Zap} title="Backend" items={["Base44 Platform", "Deno Runtime", "Serverless"]} color="purple" />
+            <TechCard icon={Sparkles} title="AI & APIs" items={["OpenAI API", "HubSpot API", "Web Search"]} color="amber" />
+            <TechCard icon={BarChart3} title="Analytics" items={["Recharts", "Real-time Data", "React Query"]} color="green" />
           </div>
         </div>
       </section>
@@ -206,69 +177,14 @@ export default function Landing() {
           </h2>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-              <div>
-                <div className="font-semibold text-gray-900">Complete Source Code</div>
-                <div className="text-sm text-gray-600">Full access to all frontend and backend code</div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-              <div>
-                <div className="font-semibold text-gray-900">8 Backend Functions</div>
-                <div className="text-sm text-gray-600">AI generation, CRM sync, email automation</div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-              <div>
-                <div className="font-semibold text-gray-900">7 Data Entities</div>
-                <div className="text-sm text-gray-600">Pre-configured database schema</div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-              <div>
-                <div className="font-semibold text-gray-900">5 Scheduled Automations</div>
-                <div className="text-sm text-gray-600">Daily CRM sync, email processing, lead scoring</div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-              <div>
-                <div className="font-semibold text-gray-900">Analytics Dashboard</div>
-                <div className="text-sm text-gray-600">Charts, metrics, performance tracking</div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-              <div>
-                <div className="font-semibold text-gray-900">Setup Documentation</div>
-                <div className="text-sm text-gray-600">Step-by-step deployment guide</div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-              <div>
-                <div className="font-semibold text-gray-900">Email Templates</div>
-                <div className="text-sm text-gray-600">Pre-built outreach sequences</div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-              <div>
-                <div className="font-semibold text-gray-900">Responsive Design</div>
-                <div className="text-sm text-gray-600">Mobile-optimized interface</div>
-              </div>
-            </div>
+            <IncludedItem title="Complete Source Code" description="Full access to all frontend and backend code" />
+            <IncludedItem title="8 Backend Functions" description="AI generation, CRM sync, email automation" />
+            <IncludedItem title="7 Data Entities" description="Pre-configured database schema" />
+            <IncludedItem title="5 Scheduled Automations" description="Daily CRM sync, email processing, lead scoring" />
+            <IncludedItem title="Analytics Dashboard" description="Charts, metrics, performance tracking" />
+            <IncludedItem title="Setup Documentation" description="Step-by-step deployment guide" />
+            <IncludedItem title="Email Templates" description="Pre-built outreach sequences" />
+            <IncludedItem title="Responsive Design" description="Mobile-optimized interface" />
           </div>
 
           <div className="mt-12 text-center">

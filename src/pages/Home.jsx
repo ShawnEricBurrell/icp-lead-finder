@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { Sparkles, Target, Zap, Shield } from 'lucide-react';
@@ -6,6 +6,21 @@ import SearchForm from '@/components/leads/SearchForm';
 import ResultsSection from '@/components/leads/ResultsSection';
 import LoadingIndicator from '@/components/leads/LoadingIndicator';
 import LeadDetailsModal from '@/components/leads/LeadDetailsModal';
+
+const FeatureCard = memo(({ icon: Icon, title, description, index }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.4 + index * 0.1 }}
+    className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+  >
+    <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+      <Icon className="w-6 h-6 text-blue-600" />
+    </div>
+    <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
+    <p className="text-gray-600 text-sm">{description}</p>
+  </motion.div>
+));
 
 export default function Home() {
   const [leads, setLeads] = useState([]);
@@ -184,19 +199,13 @@ Make the leads realistic and varied. Higher scores should have more urgent pain 
               className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto"
             >
               {features.map((feature, index) => (
-                <motion.div
+                <FeatureCard
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 + index * 0.1 }}
-                  className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
-                    <feature.icon className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                  <p className="text-gray-600 text-sm">{feature.description}</p>
-                </motion.div>
+                  icon={feature.icon}
+                  title={feature.title}
+                  description={feature.description}
+                  index={index}
+                />
               ))}
             </motion.div>
           )}

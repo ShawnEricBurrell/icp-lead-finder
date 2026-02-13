@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
-import { Search, LayoutDashboard, Sparkles, Settings, BarChart3 } from 'lucide-react';
+import { Search, LayoutDashboard, Sparkles, Settings, BarChart3, FileText } from 'lucide-react';
 
 export default function Layout({ children, currentPageName }) {
   const navItems = [
@@ -9,6 +9,7 @@ export default function Layout({ children, currentPageName }) {
     { name: 'Dashboard', icon: LayoutDashboard, page: 'Dashboard' },
     { name: 'Analytics', icon: BarChart3, page: 'Analytics' },
     { name: 'Templates', icon: Sparkles, page: 'EmailTemplates' },
+    { name: 'Features', icon: FileText, page: 'Features' },
     { name: 'CRM Settings', icon: Settings, page: 'CRMSettings' },
   ];
 

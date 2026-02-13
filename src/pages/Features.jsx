@@ -433,12 +433,7 @@ export default function Features() {
     }
   ];
 
-  const techStack = [
-    { category: "Frontend", items: ["React 18", "Tailwind CSS", "Framer Motion", "Recharts", "Shadcn UI"] },
-    { category: "Backend", items: ["Deno Runtime", "Base44 SDK", "OpenAI API", "HubSpot API"] },
-    { category: "Database", items: ["Base44 Entities", "Real-time Subscriptions", "Query Optimization"] },
-    { category: "Integrations", items: ["HubSpot CRM", "AI (InvokeLLM)", "Email Service", "File Upload"] }
-  ];
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 py-12">
@@ -453,7 +448,7 @@ export default function Features() {
             <FileText className="w-12 h-12 text-blue-600" />
           </motion.div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Technical Features & Capabilities
+            Features and Capabilities
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
             Comprehensive documentation of the ICP Lead Finder platform - 
@@ -475,7 +470,7 @@ export default function Features() {
             <TabsTrigger value="backend">Backend</TabsTrigger>
             <TabsTrigger value="data">Data Model</TabsTrigger>
             <TabsTrigger value="automations">Automations</TabsTrigger>
-            <TabsTrigger value="tech">Tech Stack</TabsTrigger>
+            <TabsTrigger value="tech">System Architecture</TabsTrigger>
           </TabsList>
 
           {/* Frontend Features */}
@@ -712,13 +707,13 @@ export default function Features() {
             </Card>
           </TabsContent>
 
-          {/* Tech Stack */}
+          {/* System Architecture */}
           <TabsContent value="tech" className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Globe className="w-6 h-6 text-indigo-600" />
-                  Technology Stack
+                  System Architecture
                 </CardTitle>
               </CardHeader>
               <CardContent>

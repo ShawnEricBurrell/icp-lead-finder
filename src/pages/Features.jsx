@@ -722,62 +722,9 @@ export default function Features() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid md:grid-cols-2 gap-6">
-                  {techStack.map((stack, idx) => (
-                    <Card key={idx}>
-                      <CardHeader>
-                        <CardTitle className="text-lg">{stack.category}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex flex-wrap gap-2">
-                          {stack.items.map((item, iIdx) => (
-                            <Badge key={iIdx} variant="secondary">
-                              {item}
-                            </Badge>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-
-                <Card className="mt-6">
-                  <CardHeader>
-                    <CardTitle className="text-lg">System Architecture</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-semibold text-gray-700 mb-2">Platform</h4>
-                        <p className="text-gray-600">
-                          Built on Base44 platform with backend-as-a-service infrastructure, 
-                          providing authentication, database management, and serverless functions.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-gray-700 mb-2">AI Integration</h4>
-                        <p className="text-gray-600">
-                          Leverages advanced AI models for lead generation, email drafting, 
-                          scoring, and insights with real-time web search capabilities.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-gray-700 mb-2">Real-time Updates</h4>
-                        <p className="text-gray-600">
-                          Uses React Query for data fetching and Base44 real-time subscriptions 
-                          for live updates across the application.
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-gray-700 mb-2">Security</h4>
-                        <p className="text-gray-600">
-                          Role-based access control, secure API key management, 
-                          OAuth integrations, and encrypted data storage.
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <p className="text-gray-600">
+                  Built on Base44 platform with modern React frontend and serverless backend infrastructure.
+                </p>
               </CardContent>
             </Card>
           </TabsContent>

@@ -51,8 +51,8 @@ import Analytics from './pages/Analytics';
 import CRMSettings from './pages/CRMSettings';
 import Dashboard from './pages/Dashboard';
 import EmailTemplates from './pages/EmailTemplates';
-import Home from './pages/Home';
 import Features from './pages/Features';
+import Home from './pages/Home';
 import Landing from './pages/Landing';
 import __Layout from './Layout.jsx';
 
@@ -62,8 +62,8 @@ export const PAGES = {
     "CRMSettings": CRMSettings,
     "Dashboard": Dashboard,
     "EmailTemplates": EmailTemplates,
-    "Home": Home,
     "Features": Features,
+    "Home": Home,
     "Landing": Landing,
 }
 

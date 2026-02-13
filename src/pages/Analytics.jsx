@@ -96,6 +96,7 @@ export default function Analytics() {
 
         {/* Filters */}
         {hasAnyData && (
+        <>
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
           <div className="grid md:grid-cols-3 gap-4">
             <div>
@@ -190,6 +191,7 @@ export default function Analytics() {
             />
           </TabsContent>
         </Tabs>
+        </>
         )}
       </div>
     </div>

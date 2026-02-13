@@ -507,8 +507,20 @@ export default function Features() {
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                              <div className={`p-2 bg-${module.color}-100 rounded-xl`}>
-                                <module.icon className={`w-5 h-5 text-${module.color}-600`} />
+                              <div className={
+                                module.color === 'blue' ? 'p-2 bg-blue-100 rounded-xl' :
+                                module.color === 'purple' ? 'p-2 bg-purple-100 rounded-xl' :
+                                module.color === 'green' ? 'p-2 bg-green-100 rounded-xl' :
+                                module.color === 'amber' ? 'p-2 bg-amber-100 rounded-xl' :
+                                'p-2 bg-indigo-100 rounded-xl'
+                              }>
+                                <module.icon className={
+                                  module.color === 'blue' ? 'w-5 h-5 text-blue-600' :
+                                  module.color === 'purple' ? 'w-5 h-5 text-purple-600' :
+                                  module.color === 'green' ? 'w-5 h-5 text-green-600' :
+                                  module.color === 'amber' ? 'w-5 h-5 text-amber-600' :
+                                  'w-5 h-5 text-indigo-600'
+                                } />
                               </div>
                               <div>
                                 <CardTitle className="text-lg">{module.category}</CardTitle>

@@ -57,15 +57,7 @@ export default function Layout({ children, currentPageName }) {
       <footer className="border-t border-gray-100 bg-white/80 backdrop-blur-xl mt-12">
         <div className="container mx-auto px-4 py-6">
           <div className="text-center text-sm text-gray-600">
-            Built by{' '}
-            <a 
-              href="https://sb-digital-solutions.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
-            >
-              SB Digital Solutions
-            </a>
+            © {new Date().getFullYear()} ICP Lead Finder. All rights reserved.
           </div>
         </div>
       </footer>

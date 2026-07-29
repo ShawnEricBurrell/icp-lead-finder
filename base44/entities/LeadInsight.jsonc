@@ -1,0 +1,92 @@
+{
+  "name": "LeadInsight",
+  "type": "object",
+  "properties": {
+    "report_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "conversion_predictions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "lead_id": {
+            "type": "string"
+          },
+          "company_name": {
+            "type": "string"
+          },
+          "conversion_probability": {
+            "type": "number"
+          },
+          "predicted_timeline": {
+            "type": "string"
+          },
+          "key_factors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "recommended_actions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "industry_trends": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "industry": {
+            "type": "string"
+          },
+          "trend": {
+            "type": "string"
+          },
+          "impact": {
+            "type": "string"
+          },
+          "opportunity": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "optimal_strategies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "strategy_name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "success_rate": {
+            "type": "number"
+          },
+          "best_for": {
+            "type": "string"
+          },
+          "implementation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ai_summary": {
+      "type": "string",
+      "description": "Executive summary of insights"
+    }
+  },
+  "required": [
+    "report_date"
+  ]
+}

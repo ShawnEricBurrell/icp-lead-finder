@@ -1,0 +1,22 @@
+{
+  "name": "Search",
+  "type": "object",
+  "properties": {
+    "city": {
+      "type": "string",
+      "description": "City searched"
+    },
+    "industry": {
+      "type": "string",
+      "description": "Industry searched"
+    },
+    "results_count": {
+      "type": "number",
+      "description": "Number of leads found"
+    }
+  },
+  "required": [
+    "city",
+    "industry"
+  ]
+}

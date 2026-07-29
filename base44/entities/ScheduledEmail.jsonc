@@ -1,0 +1,55 @@
+{
+  "name": "ScheduledEmail",
+  "type": "object",
+  "properties": {
+    "lead_id": {
+      "type": "string",
+      "description": "ID of the lead"
+    },
+    "company_name": {
+      "type": "string"
+    },
+    "to_email": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "scheduled_for": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When to send the email"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "sent",
+        "failed",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tracking_id": {
+      "type": "string",
+      "description": "Unique ID for tracking opens/clicks"
+    },
+    "error_message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "lead_id",
+    "to_email",
+    "subject",
+    "body",
+    "scheduled_for"
+  ]
+}

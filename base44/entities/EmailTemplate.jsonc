@@ -1,0 +1,42 @@
+{
+  "name": "EmailTemplate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Template name"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Email subject line with variables like {{company_name}}, {{contact_name}}"
+    },
+    "body": {
+      "type": "string",
+      "description": "Email body with variables"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "initial_outreach",
+        "follow_up",
+        "proposal",
+        "check_in"
+      ],
+      "default": "initial_outreach"
+    },
+    "use_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of times used"
+    },
+    "success_rate": {
+      "type": "number",
+      "description": "Reply rate percentage"
+    }
+  },
+  "required": [
+    "name",
+    "subject",
+    "body"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "name": "EmailReport",
+  "type": "object",
+  "properties": {
+    "report_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "period": {
+      "type": "string",
+      "description": "Report period (e.g., 'Weekly', 'Monthly')"
+    },
+    "total_sent": {
+      "type": "number"
+    },
+    "total_opened": {
+      "type": "number"
+    },
+    "total_replied": {
+      "type": "number"
+    },
+    "open_rate": {
+      "type": "number"
+    },
+    "reply_rate": {
+      "type": "number"
+    },
+    "insights": {
+      "type": "object",
+      "properties": {
+        "top_performing_subjects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "top_performing_patterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "recommendations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ai_analysis": {
+      "type": "string",
+      "description": "AI-generated performance analysis"
+    }
+  },
+  "required": [
+    "report_date",
+    "period"
+  ]
+}

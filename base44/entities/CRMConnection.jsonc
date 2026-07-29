@@ -1,0 +1,67 @@
+{
+  "name": "CRMConnection",
+  "type": "object",
+  "properties": {
+    "crm_type": {
+      "type": "string",
+      "enum": [
+        "hubspot",
+        "salesforce",
+        "zoho"
+      ],
+      "description": "Type of CRM"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "sync_direction": {
+      "type": "string",
+      "enum": [
+        "to_crm",
+        "from_crm",
+        "bidirectional"
+      ],
+      "default": "bidirectional"
+    },
+    "field_mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "base44_field": {
+            "type": "string"
+          },
+          "crm_field": {
+            "type": "string"
+          },
+          "field_type": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Field mappings between Base44 and CRM"
+    },
+    "last_sync": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sync_stats": {
+      "type": "object",
+      "properties": {
+        "total_synced": {
+          "type": "number"
+        },
+        "last_sync_count": {
+          "type": "number"
+        },
+        "errors": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "required": [
+    "crm_type"
+  ]
+}

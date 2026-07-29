@@ -1,0 +1,215 @@
+{
+  "name": "Lead",
+  "type": "object",
+  "properties": {
+    "company_name": {
+      "type": "string",
+      "description": "Name of the company"
+    },
+    "industry": {
+      "type": "string",
+      "description": "Industry sector"
+    },
+    "location": {
+      "type": "string",
+      "description": "City and country"
+    },
+    "lead_score": {
+      "type": "number",
+      "description": "Score from 0-100"
+    },
+    "timer_pain_point": {
+      "type": "string",
+      "description": "Primary reason they need services now"
+    },
+    "pain_points": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of identified pain points"
+    },
+    "score_breakdown": {
+      "type": "object",
+      "description": "Breakdown of scoring categories"
+    },
+    "contact_name": {
+      "type": "string"
+    },
+    "contact_title": {
+      "type": "string"
+    },
+    "verified_email": {
+      "type": "string"
+    },
+    "direct_phone": {
+      "type": "string"
+    },
+    "linkedin_url": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "company_size": {
+      "type": "string"
+    },
+    "tech_stack": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "contacted": {
+      "type": "boolean",
+      "default": false
+    },
+    "contact_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "qualified",
+        "unqualified",
+        "converted",
+        "archived"
+      ],
+      "default": "new"
+    },
+    "email_draft": {
+      "type": "string",
+      "description": "AI-generated email draft"
+    },
+    "email_subject": {
+      "type": "string",
+      "description": "Email subject line"
+    },
+    "email_status": {
+      "type": "string",
+      "enum": [
+        "not_sent",
+        "sent",
+        "opened",
+        "replied"
+      ],
+      "default": "not_sent"
+    },
+    "email_sent_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "email_opened_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "email_replied_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "follow_up_sequence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "delay_days": {
+            "type": "number"
+          }
+        }
+      },
+      "description": "Follow-up email sequence"
+    },
+    "cadence_active": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the automated sales cadence is active"
+    },
+    "cadence_current_step": {
+      "type": "number",
+      "default": 0,
+      "description": "Current step in the follow-up sequence (0-based)"
+    },
+    "cadence_last_sent": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the last automated email was sent"
+    },
+    "cadence_paused_reason": {
+      "type": "string",
+      "description": "Reason why cadence was paused"
+    },
+    "engagement_score": {
+      "type": "number",
+      "default": 0,
+      "description": "Engagement score based on interactions (0-100)"
+    },
+    "engagement_activities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          },
+          "score_impact": {
+            "type": "number"
+          }
+        }
+      },
+      "description": "Log of engagement activities"
+    },
+    "score_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "previous_score": {
+            "type": "number"
+          },
+          "new_score": {
+            "type": "number"
+          },
+          "change": {
+            "type": "number"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "History of score changes with explanations"
+    },
+    "last_score_update": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the score was last updated by AI"
+    }
+  },
+  "required": [
+    "company_name",
+    "industry",
+    "location",
+    "lead_score"
+  ]
+}
